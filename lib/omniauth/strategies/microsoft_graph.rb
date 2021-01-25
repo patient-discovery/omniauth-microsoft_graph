@@ -54,7 +54,7 @@ module OmniAuth
 
           session['omniauth.state'] = params[:state] if params[:state]
         end
-      end     
+      end
 
       def raw_info
         @raw_info ||= access_token.get('https://graph.microsoft.com/v1.0/me').parsed
@@ -62,7 +62,7 @@ module OmniAuth
 
       def callback_url
         options[:callback_url] || full_host + script_name + callback_path
-      end  
+      end
 
       def custom_build_access_token
         access_token = get_access_token(request)
@@ -89,7 +89,7 @@ module OmniAuth
             verifier = body && body['code']
             client_get_token(verifier, '/auth/microsoft_graph/callback') if verifier
           rescue JSON::ParserError => e
-            warn "[omniauth google-oauth2] JSON parse error=#{e}"
+            warn "[omniauth microsoft_graph-oauth2] JSON parse error=#{e}"
           end
         end
       end
@@ -119,7 +119,7 @@ module OmniAuth
         raw_response = client.request(:get, 'https://graph.microsoft.com/v1.0/me',
                                       params: { access_token: access_token }).parsed
         (raw_response['aud'] == options.client_id) || options.authorized_client_ids.include?(raw_response['aud'])
-      end              
+      end
     end
   end
 end
